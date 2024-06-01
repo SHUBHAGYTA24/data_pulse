@@ -1,6 +1,5 @@
 import pandas as pd
 from datetime import datetime
-from sklearn.model_selection import train_test_split
 from datareader.data_reader import DataReader
 
 class DataManager:
@@ -13,12 +12,13 @@ class DataManager:
         df_new (DataFrame): New dataset based on user's input.
     """
     
-    def __init__(self, df=None, df_old=None, df_new=None):
-        self.df = df
-        self.df_old = df_old
-        self.df_new = df_new
+    def __init__(self, full_data: pd.DataFrame = None):
+        self.full_data = full_data
+        self.old_data: pd.DataFrame = None
+        self.new_data: pd.DataFrame = None
 
-    def load_data(self, source, source_type='csv', query=None, connector=None):
+
+    def load_data(self, source: str, source_type: str = 'csv', query: str = None, connector: object = None) -> None:
 
         """
         Load data from the source.
@@ -44,7 +44,7 @@ class DataManager:
         else:
             raise ValueError("Invalid source_type. Choose from 'csv', 'parquet', or 'bq'.")
         
-    def split_data(self, method, value):
+    def split_data(self, method: str, value: object) -> None:
         """
         Split data into old and new based on the user's input. 
         
